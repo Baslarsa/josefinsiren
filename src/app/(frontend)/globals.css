@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Beinet';
+  src: url('/fonts/Beinetcn.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @layer base {
   h1,
   h2,
@@ -11,6 +19,12 @@
   h6 {
     font-size: unset;
     font-weight: unset;
+  }
+
+  p {
+    font-family: 'Arial', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
   }
 
   :root {

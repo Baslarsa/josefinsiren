@@ -3,6 +3,7 @@ import type { Block, Field } from 'payload'
 import {
   FixedToolbarFeature,
   HeadingFeature,
+  InlineCodeFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
@@ -42,6 +43,7 @@ const columnFields: Field[] = [
           ...rootFeatures,
           HeadingFeature({ enabledHeadingSizes: ['h2', 'h3', 'h4'] }),
           FixedToolbarFeature(),
+          InlineCodeFeature(),
           InlineToolbarFeature(),
         ]
       },

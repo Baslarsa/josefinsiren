@@ -55,6 +55,7 @@ export const plugins: Plugin[] = [
     generateURL,
   }),
   formBuilderPlugin({
+    defaultToEmail: process.env.DEFAULT_TO_EMAIL,
     fields: {
       payment: false,
     },
