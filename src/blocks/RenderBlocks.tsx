@@ -39,6 +39,7 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div className="" key={index}>
+                  {/* @ts-ignore */}
                   <Block {...block} disableInnerContainer />
                 </div>
               )
