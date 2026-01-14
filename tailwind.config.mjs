@@ -60,7 +60,7 @@ const config = {
           DEFAULT: 'hsl(var(--accent))',
           foreground: 'hsl(var(--accent-foreground))',
         },
-        background: 'hsl(var(--background))',
+        background: 'var(--background)',
         border: 'hsla(var(--border))',
         card: {
           DEFAULT: 'hsl(var(--card))',

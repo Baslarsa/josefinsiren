@@ -10,6 +10,7 @@ import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
 import { fields } from './fields'
 import { getClientSideURL } from '@/utilities/getURL'
+import CustomButton from '@/components/Button'
 
 export type FormBlockType = {
   blockName?: string
@@ -114,7 +115,7 @@ export const FormBlock: React.FC<
   )
 
   return (
-    <div className="container lg:max-w-[48rem]">
+    <div className="container lg:max-w-[48rem] py-8 rounded-xl overflow-hidden">
       {enableIntro && introContent && !hasSubmitted && (
         <RichText className="mb-8 lg:mb-12" data={introContent} enableGutter={false} />
       )}
@@ -151,9 +152,9 @@ export const FormBlock: React.FC<
                   })}
               </div>
 
-              <Button form={formID} type="submit" variant="default">
+              <CustomButton form={formID} type="submit" variant="default">
                 {submitButtonLabel}
-              </Button>
+              </CustomButton>
             </form>
           )}
         </FormProvider>

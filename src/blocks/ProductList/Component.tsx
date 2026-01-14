@@ -1,8 +1,10 @@
 'use client'
 
+import CustomButton from '@/components/Button'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import RichText from '@/components/RichText'
 import { Product } from '@/payload-types'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 
 type ProductsBlockComponentProps = {
@@ -35,34 +37,45 @@ export const ProductsBlockComponent = ({
       <h2 className="text-3xl font-semibold text-center mb-10">{heading}</h2>
 
       {/* Grid */}
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto px-4">
+      <div className="grid gap-8 grid-cols-1 max-w-6xl mx-auto px-4">
         {products.map((product: Product) => (
-          <div
-            key={product.id}
-            className="bg-white rounded-xl shadow-sm border border-neutral-200 hover:shadow-md transition-shadow overflow-hidden"
-          >
-            {/* Product image */}
-            {product.image && typeof product.image !== 'string' && (
-              <div className="w-full h-48 bg-neutral-100">
-                <ImageMedia
-                  resource={product.image}
-                  className="w-full h-full object-cover object-center"
-                />
-              </div>
-            )}
-
-            {/* Content */}
-            <div className="p-6 flex flex-col gap-2">
-              <h3 className="text-lg font-semibold">{product.title}</h3>
-
-              {product.description && <RichText data={product.description} enableGutter={false} />}
-
-              {/* Price (if exists) */}
-              {product.price && <p className="text-xl font-medium mt-2">{product.price} kr</p>}
-            </div>
-          </div>
+          <TailwindProduct key={product.id} product={product} />
         ))}
       </div>
     </section>
+  )
+}
+
+function TailwindProduct({ product }: { product: Product }) {
+  return (
+    <div className="text-white">
+      <div className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
+        <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
+          <ImageMedia resource={product.image} className="h-full w-full object-cover" />
+          <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
+            <h1 className="text-3xl font-bold tracking-tight">{product.title}</h1>
+
+            <div className="mt-3">
+              <h2 className="sr-only">Product information</h2>
+              <p className="text-3xl text-gray-300 tracking-tight">{product.price + ' €'}</p>
+            </div>
+
+            <div className="mt-6">
+              <h3 className="sr-only">Description</h3>
+
+              <div className="space-y-6">
+                <RichText data={product.description} enableGutter={false} />
+              </div>
+            </div>
+
+            <div className="mt-10 flex w-full">
+              <Link href={product.paymentLink.url} className="w-full">
+                <CustomButton className="w-full">{product.paymentLink.label}</CustomButton>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

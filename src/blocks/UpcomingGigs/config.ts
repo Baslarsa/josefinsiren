@@ -20,7 +20,7 @@ export const UpcomingGigsBlock: Block = {
       label: 'Number of gigs to show',
       defaultValue: 3,
       min: 1,
-      max: 10,
+      max: 1000,
       required: false,
     },
   ],

@@ -17,7 +17,7 @@ export const ProductsBlock: Block = {
     {
       name: 'maxProducts',
       type: 'number',
-      label: 'Number of gigs to show',
+      label: 'Number of products to show',
       defaultValue: 5,
       min: 1,
       max: 100,

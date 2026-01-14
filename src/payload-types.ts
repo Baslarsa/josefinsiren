@@ -216,6 +216,13 @@ export interface Page {
         blockName?: string | null;
         blockType: 'products';
       }
+    | {
+        heading?: string | null;
+        maxGigs?: number | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'upcomingGigs';
+      }
   )[];
   meta?: {
     title?: string | null;
@@ -1159,6 +1166,14 @@ export interface PagesSelect<T extends boolean = true> {
           | {
               heading?: T;
               maxProducts?: T;
+              id?: T;
+              blockName?: T;
+            };
+        upcomingGigs?:
+          | T
+          | {
+              heading?: T;
+              maxGigs?: T;
               id?: T;
               blockName?: T;
             };
