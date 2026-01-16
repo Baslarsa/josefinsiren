@@ -18,4 +18,5 @@ export const fields = {
   state: State,
   text: Text,
   textarea: Textarea,
+  companyWebsite: Text,
 }

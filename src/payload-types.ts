@@ -74,6 +74,7 @@ export interface Config {
     users: User;
     gigs: Gig;
     products: Product;
+    'social-media': SocialMedia;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -98,6 +99,7 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     gigs: GigsSelect<false> | GigsSelect<true>;
     products: ProductsSelect<false> | ProductsSelect<true>;
+    'social-media': SocialMediaSelect<false> | SocialMediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -224,6 +226,7 @@ export interface Page {
         blockName?: string | null;
         blockType: 'upcomingGigs';
       }
+    | SocialMediaBlock
   )[];
   meta?: {
     title?: string | null;
@@ -805,6 +808,28 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SocialMediaBlock".
+ */
+export interface SocialMediaBlock {
+  socialMedia: (number | SocialMedia)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'socialMedia';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media".
+ */
+export interface SocialMedia {
+  id: number;
+  title: 'Spotify' | 'Youtube' | 'Facebook' | 'Instagram';
+  link: string;
+  icon: number | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "gigs".
  */
 export interface Gig {
@@ -1065,6 +1090,10 @@ export interface PayloadLockedDocument {
         value: number | Product;
       } | null)
     | ({
+        relationTo: 'social-media';
+        value: number | SocialMedia;
+      } | null)
+    | ({
         relationTo: 'redirects';
         value: number | Redirect;
       } | null)
@@ -1178,6 +1207,7 @@ export interface PagesSelect<T extends boolean = true> {
               id?: T;
               blockName?: T;
             };
+        socialMedia?: T | SocialMediaBlockSelect<T>;
       };
   meta?:
     | T
@@ -1274,6 +1304,15 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SocialMediaBlock_select".
+ */
+export interface SocialMediaBlockSelect<T extends boolean = true> {
+  socialMedia?: T;
   id?: T;
   blockName?: T;
 }
@@ -1471,6 +1510,17 @@ export interface ProductsSelect<T extends boolean = true> {
         label?: T;
       };
   image?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-media_select".
+ */
+export interface SocialMediaSelect<T extends boolean = true> {
+  title?: T;
+  link?: T;
+  icon?: T;
   updatedAt?: T;
   createdAt?: T;
 }

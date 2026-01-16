@@ -21,8 +21,8 @@ import type {
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { cn } from '@/utilities/ui'
-import { UpcomingGigsBlock } from '@/blocks/UpcomingGigs/config'
 import { GigsList } from '@/blocks/UpcomingGigs/Component'
+import SocialMediaBlock from '@/blocks/SocialMediaBlock/Component'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -52,8 +52,11 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         disableInnerContainer={true}
       />
     ),
+    socialMedia: ({ node }: { node: SerializedBlockNode }) => {
+      const { socialMedia } = node.fields
+      return <SocialMediaBlock socialMedia={socialMedia} />
+    },
     upcomingGigs: ({ node }: { node: SerializedBlockNode }) => {
-      console.log('node', node)
       const { heading, maxGigs } = node.fields || {}
       return <GigsList heading={heading} maxGigs={maxGigs} />
     },

@@ -10,6 +10,7 @@ import {
 
 import { linkGroup } from '@/fields/linkGroup'
 import { UpcomingGigsBlock } from '@/blocks/UpcomingGigs/config'
+import { SocialMediaBlock } from '@/blocks/SocialMediaBlock/config'
 
 export const hero: Field = {
   name: 'hero',
@@ -51,7 +52,7 @@ export const hero: Field = {
             FixedToolbarFeature(),
             InlineToolbarFeature(),
             BlocksFeature({
-              blocks: [UpcomingGigsBlock],
+              blocks: [UpcomingGigsBlock, SocialMediaBlock],
             }),
           ]
         },

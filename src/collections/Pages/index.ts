@@ -22,6 +22,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import { ProductsBlock } from '@/blocks/ProductList/config'
 import { UpcomingGigsBlock } from '@/blocks/UpcomingGigs/config'
+import { SocialMediaBlock } from '@/blocks/SocialMediaBlock/config'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -82,6 +83,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 FormBlock,
                 ProductsBlock,
                 UpcomingGigsBlock,
+                SocialMediaBlock,
               ],
               required: true,
               admin: {
