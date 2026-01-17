@@ -19,6 +19,11 @@ export type FormBlockType = {
   introContent?: DefaultTypedEditorState
 }
 
+type RHFValues = Record<string, unknown> & {
+  hp?: string
+  ts?: number
+}
+
 export const FormBlock: React.FC<
   {
     id?: string
@@ -31,8 +36,8 @@ export const FormBlock: React.FC<
     introContent,
   } = props
 
-  const formMethods = useForm({
-    defaultValues: formFromProps.fields,
+  const formMethods = useForm<RHFValues>({
+    defaultValues: {},
   })
 
   const {
@@ -48,15 +53,13 @@ export const FormBlock: React.FC<
   const router = useRouter()
 
   const onSubmit = useCallback(
-    (data: FormFieldBlock[]) => {
+    (data: RHFValues) => {
       let loadingTimerID: ReturnType<typeof setTimeout>
       const submitForm = async () => {
         setError(undefined)
+        const { hp, ts, ...rest } = data
 
-        const dataToSend = Object.entries(data).map(([name, value]) => ({
-          field: name,
-          value,
-        }))
+        const dataToSend = Object.entries(rest).map(([field, value]) => ({ field, value }))
 
         // delay loading indicator by 1s
         loadingTimerID = setTimeout(() => {
@@ -64,15 +67,15 @@ export const FormBlock: React.FC<
         }, 1000)
 
         try {
-          const req = await fetch(`${getClientSideURL()}/api/form-submissions`, {
+          const req = await fetch('/api/forms/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               form: formID,
               submissionData: dataToSend,
+              hp,
+              ts,
             }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            method: 'POST',
           })
 
           const res = await req.json()
@@ -113,6 +116,7 @@ export const FormBlock: React.FC<
     },
     [router, formID, redirect, confirmationType],
   )
+  const formStartedAt = React.useRef<number>(Date.now())
 
   return (
     <div className="container lg:max-w-[48rem] py-8 rounded-xl overflow-hidden">
@@ -128,6 +132,26 @@ export const FormBlock: React.FC<
           {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
           {!hasSubmitted && (
             <form id={formID} onSubmit={handleSubmit(onSubmit)}>
+              <input
+                type="hidden"
+                value={formStartedAt.current}
+                {...register('ts', { valueAsNumber: true })}
+              />
+
+              <div
+                aria-hidden="true"
+                style={{
+                  position: 'absolute',
+                  left: '-10000px',
+                  top: 'auto',
+                  width: '1px',
+                  height: '1px',
+                  overflow: 'hidden',
+                }}
+              >
+                <label htmlFor="hp">Leave empty</label>
+                <input id="hp" type="text" tabIndex={-1} autoComplete="off" {...register('hp')} />
+              </div>
               <div className="mb-4 last:mb-0">
                 {formFromProps &&
                   formFromProps.fields &&
