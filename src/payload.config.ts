@@ -95,9 +95,11 @@ export default buildConfig({
   email: nodemailerAdapter({
     defaultFromAddress: process.env.SMTP_USER || '',
     defaultFromName: 'JS Website',
+    skipVerify: true,
     transportOptions: {
       host: 'send.one.com',
       port: 587,
+      secure: false,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,

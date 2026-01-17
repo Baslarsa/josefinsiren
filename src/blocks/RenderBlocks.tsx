@@ -41,7 +41,7 @@ export const RenderBlocks: React.FC<{
             if (Block) {
               return (
                 <div className="" key={index}>
-                  {/* @ts-ignore */}
+                  {/* @ts-expect-error ts does not like this and its ok */}
                   <Block {...block} disableInnerContainer />
                 </div>
               )

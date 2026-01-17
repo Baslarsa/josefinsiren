@@ -3,7 +3,6 @@ import { SocialMedia } from '@/payload-types'
 import Link from 'next/link'
 
 const SocialMediaBlock: React.FC<{ socialMedia: SocialMedia[] }> = ({ socialMedia }) => {
-  console.log(socialMedia)
   return (
     <div className="flex gap-4 justify-center">
       {socialMedia.map((sm) => (
