@@ -29,14 +29,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }, [headerTheme])
   const isHome = pathname === '/home' || pathname === '/'
   return (
-    <header className="container relative z-20   " {...(theme ? { 'data-theme': theme } : {})}>
-      <div className="py-8 flex justify-start md:justify-between">
+    <header className="container z-10" {...(theme ? { 'data-theme': theme } : {})}>
+      <div className="pt-4 md:pt-8 pb-8 flex justify-between items-center w-full">
         <Link href="/">
-          {isHome ? (
-            <></>
-          ) : (
+          {!isHome && (
             <div className="">
-              <h2 className="text-xl">Josefin Sirén</h2>
+              <h2 className="text-3xl">Josefin Sirén</h2>
             </div>
           )}
         </Link>
