@@ -48,7 +48,7 @@ export const ProductsBlockComponent = ({
 
 function TailwindProduct({ product }: { product: Product }) {
   return (
-    <div className="text-white">
+    <div className="dark:text-white light:text-black">
       <div className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           <ImageMedia resource={product.image} className="h-full w-full object-cover" />
@@ -57,7 +57,9 @@ function TailwindProduct({ product }: { product: Product }) {
 
             <div className="mt-3">
               <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl text-gray-300 tracking-tight">{product.price + ' €'}</p>
+              <p className="text-3xl dark:text-gray-300 text-gray-600 tracking-tight">
+                {product.price + ' €'}
+              </p>
             </div>
 
             <div className="mt-6">
