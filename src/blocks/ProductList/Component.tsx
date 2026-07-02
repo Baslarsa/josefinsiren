@@ -19,10 +19,7 @@ function formatPrice(unitAmount: number | null, currency: string) {
   }).format(unitAmount / 100)
 }
 
-export const ProductsBlockComponent = ({
-  heading,
-  maxProducts,
-}: ProductsBlockComponentProps) => {
+export const ProductsBlockComponent = ({ heading, maxProducts }: ProductsBlockComponentProps) => {
   const [products, setProducts] = useState<ShopProduct[]>([])
   const displayHeading = heading || 'Produkter'
   const limit = maxProducts || 5
@@ -94,7 +91,7 @@ function TailwindProduct({ product }: { product: ShopProduct }) {
               <div className="mt-3">
                 <h2 className="sr-only">Product information</h2>
                 <p className="text-3xl dark:text-gray-300 text-gray-600 tracking-tight">
-                  {price}
+                  {price} <span className="text-sm"> + frakt</span>
                 </p>
               </div>
             )}
