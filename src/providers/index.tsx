@@ -3,6 +3,7 @@ import React from 'react'
 import { HeaderThemeProvider } from './HeaderTheme'
 import { ThemeProvider } from './Theme'
 import { ReactQueryProvider } from './ReactQuery/ReactQueryProvider'
+import { CartProvider } from './Cart/CartContext'
 
 export const Providers: React.FC<{
   children: React.ReactNode
@@ -10,7 +11,9 @@ export const Providers: React.FC<{
   return (
     <ThemeProvider>
       <ReactQueryProvider>
-        <HeaderThemeProvider>{children}</HeaderThemeProvider>
+        <CartProvider>
+          <HeaderThemeProvider>{children}</HeaderThemeProvider>
+        </CartProvider>
       </ReactQueryProvider>
     </ThemeProvider>
   )

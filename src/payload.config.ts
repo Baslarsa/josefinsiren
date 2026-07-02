@@ -17,7 +17,6 @@ import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
 import { getServerSideURL } from './utilities/getURL'
 import { Gigs } from './collections/Gigs'
-import { Products } from './collections/Products'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { SocialMedia } from './collections/SocialMedia'
 
@@ -60,7 +59,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Gigs, Products, SocialMedia],
+  collections: [Pages, Posts, Media, Categories, Users, Gigs, SocialMedia],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

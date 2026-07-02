@@ -73,7 +73,6 @@ export interface Config {
     categories: Category;
     users: User;
     gigs: Gig;
-    products: Product;
     'social-media': SocialMedia;
     redirects: Redirect;
     forms: Form;
@@ -98,7 +97,6 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     gigs: GigsSelect<false> | GigsSelect<true>;
-    products: ProductsSelect<false> | ProductsSelect<true>;
     'social-media': SocialMediaSelect<false> | SocialMediaSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -842,37 +840,6 @@ export interface Gig {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products".
- */
-export interface Product {
-  id: number;
-  title: string;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  price: number;
-  paymentLink: {
-    url: string;
-    label: string;
-  };
-  image: number | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1084,10 +1051,6 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'gigs';
         value: number | Gig;
-      } | null)
-    | ({
-        relationTo: 'products';
-        value: number | Product;
       } | null)
     | ({
         relationTo: 'social-media';
@@ -1492,24 +1455,6 @@ export interface GigsSelect<T extends boolean = true> {
   title?: T;
   city?: T;
   date?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "products_select".
- */
-export interface ProductsSelect<T extends boolean = true> {
-  title?: T;
-  description?: T;
-  price?: T;
-  paymentLink?:
-    | T
-    | {
-        url?: T;
-        label?: T;
-      };
-  image?: T;
   updatedAt?: T;
   createdAt?: T;
 }

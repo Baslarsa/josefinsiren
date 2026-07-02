@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react'
 import type { Header } from '@/payload-types'
 
 import { HeaderNav } from './Nav'
+import { CartWidget } from '@/components/Cart/CartWidget'
 
 interface HeaderClientProps {
   data: Header
@@ -38,7 +39,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             </div>
           )}
         </Link>
-        <HeaderNav data={data} />
+        <div className="flex items-center gap-6">
+          <HeaderNav data={data} />
+          <CartWidget />
+        </div>
       </div>
     </header>
   )

@@ -1,44 +1,52 @@
 'use client'
 
 import CustomButton from '@/components/Button'
-import { ImageMedia } from '@/components/Media/ImageMedia'
-import RichText from '@/components/RichText'
-import { Product } from '@/payload-types'
-import Link from 'next/link'
+import { useCart } from '@/providers/Cart/CartContext'
+import type { ShopProduct } from '@/lib/commerce/products'
 import { useEffect, useState } from 'react'
+import { Check } from 'lucide-react'
 
 type ProductsBlockComponentProps = {
   heading?: string
   maxProducts?: number
 }
 
+function formatPrice(unitAmount: number | null, currency: string) {
+  if (unitAmount === null) return null
+  return new Intl.NumberFormat('sv-SE', {
+    style: 'currency',
+    currency: currency.toUpperCase(),
+  }).format(unitAmount / 100)
+}
+
 export const ProductsBlockComponent = ({
-  heading = 'Produkter',
-  maxProducts = 5,
+  heading,
+  maxProducts,
 }: ProductsBlockComponentProps) => {
-  const [products, setProducts] = useState<Product[]>([])
+  const [products, setProducts] = useState<ShopProduct[]>([])
+  const displayHeading = heading || 'Produkter'
+  const limit = maxProducts || 5
 
   useEffect(() => {
     const load = async () => {
-      const res = await fetch(`/api/products?limit=${maxProducts}`)
+      const res = await fetch('/api/shop/products')
       const data = await res.json()
 
-      // Accept both { docs: [...] } or direct array
-      setProducts(data.docs ?? data)
+      setProducts((data.products ?? []).slice(0, limit))
     }
     load()
-  }, [maxProducts])
+  }, [limit])
 
   if (!products.length) return null
 
   return (
     <section className="my-12">
       {/* Heading */}
-      <h2 className="text-3xl font-semibold text-center mb-10">{heading}</h2>
+      <h2 className="text-3xl font-semibold text-center mb-10">{displayHeading}</h2>
 
       {/* Grid */}
       <div className="grid gap-8 grid-cols-1 max-w-6xl mx-auto px-4">
-        {products.map((product: Product) => (
+        {products.map((product) => (
           <TailwindProduct key={product.id} product={product} />
         ))}
       </div>
@@ -46,34 +54,75 @@ export const ProductsBlockComponent = ({
   )
 }
 
-function TailwindProduct({ product }: { product: Product }) {
+function TailwindProduct({ product }: { product: ShopProduct }) {
+  const { addItem, items } = useCart()
+  const [added, setAdded] = useState(false)
+
+  const inCart = items.some((item) => item.priceId === product.priceId)
+  const price = formatPrice(product.unitAmount, product.currency)
+
+  const handleAddToCart = () => {
+    if (product.unitAmount === null) return
+
+    addItem({
+      priceId: product.priceId,
+      productId: product.id,
+      name: product.name,
+      image: product.images[0],
+      unitAmount: product.unitAmount,
+      currency: product.currency,
+    })
+    setAdded(true)
+  }
+
   return (
     <div className="dark:text-white light:text-black">
       <div className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
-          <ImageMedia resource={product.image} className="h-full w-full object-cover" />
+          {product.images[0] && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={product.images[0]}
+              alt={product.name}
+              className="h-full w-full object-cover"
+            />
+          )}
           <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-            <h1 className="text-3xl font-bold tracking-tight">{product.title}</h1>
+            <h1 className="text-3xl font-bold tracking-tight">{product.name}</h1>
 
-            <div className="mt-3">
-              <h2 className="sr-only">Product information</h2>
-              <p className="text-3xl dark:text-gray-300 text-gray-600 tracking-tight">
-                {product.price + ' €'}
-              </p>
-            </div>
-
-            <div className="mt-6">
-              <h3 className="sr-only">Description</h3>
-
-              <div className="space-y-6">
-                <RichText data={product.description} enableGutter={false} />
+            {price && (
+              <div className="mt-3">
+                <h2 className="sr-only">Product information</h2>
+                <p className="text-3xl dark:text-gray-300 text-gray-600 tracking-tight">
+                  {price}
+                </p>
               </div>
-            </div>
+            )}
+
+            {product.description && (
+              <div className="mt-6">
+                <h3 className="sr-only">Description</h3>
+                <div className="space-y-6">
+                  <p>{product.description}</p>
+                </div>
+              </div>
+            )}
 
             <div className="mt-10 flex w-full">
-              <Link href={product.paymentLink.url} className="w-full">
-                <CustomButton className="w-full">{product.paymentLink.label}</CustomButton>
-              </Link>
+              <CustomButton
+                className="w-full gap-2"
+                onClick={handleAddToCart}
+                disabled={product.unitAmount === null}
+              >
+                {added || inCart ? (
+                  <>
+                    <Check className="h-5 w-5 text-green-500" aria-hidden="true" />
+                    Tillagd i varukorgen
+                  </>
+                ) : (
+                  'Lägg i varukorg'
+                )}
+              </CustomButton>
             </div>
           </div>
         </div>
