@@ -126,9 +126,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
         {items.length > 0 && (
           <div className="p-4 border-t border-border space-y-3">
+            <div className="flex justify-between font-thin text-gray-400">
+              <span>Frakt</span>
+              <span>6 €</span>
+            </div>
             <div className="flex justify-between font-semibold">
               <span>Delsumma</span>
-              <span>{formatPrice(subtotal, currency)}</span>
+              <span>{formatPrice(subtotal + 600, currency)}</span>
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             <CustomButton onClick={handleCheckout} disabled={isCheckingOut}>

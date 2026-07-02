@@ -21,7 +21,6 @@ function formatPrice(unitAmount: number | null, currency: string) {
 
 export const ProductsBlockComponent = ({ heading, maxProducts }: ProductsBlockComponentProps) => {
   const [products, setProducts] = useState<ShopProduct[]>([])
-  const displayHeading = heading || 'Produkter'
   const limit = maxProducts || 5
 
   useEffect(() => {
@@ -38,10 +37,6 @@ export const ProductsBlockComponent = ({ heading, maxProducts }: ProductsBlockCo
 
   return (
     <section className="my-12">
-      {/* Heading */}
-      <h2 className="text-3xl font-semibold text-center mb-10">{displayHeading}</h2>
-
-      {/* Grid */}
       <div className="grid gap-8 grid-cols-1 max-w-6xl mx-auto px-4">
         {products.map((product) => (
           <TailwindProduct key={product.id} product={product} />

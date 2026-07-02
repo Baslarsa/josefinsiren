@@ -8,6 +8,7 @@ import type { Header } from '@/payload-types'
 
 import { HeaderNav } from './Nav'
 import { CartWidget } from '@/components/Cart/CartWidget'
+import { cn } from '@/utilities/ui'
 
 interface HeaderClientProps {
   data: Header
@@ -30,18 +31,26 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   }, [headerTheme])
   const isHome = pathname === '/home' || pathname === '/'
   return (
-    <header className="container z-10" {...(theme ? { 'data-theme': theme } : {})}>
-      <div className="pt-4 md:pt-8 pb-8 flex justify-between items-center w-full">
-        <Link href="/">
-          {!isHome && (
-            <div className="">
-              <h2 className="text-3xl">Josefin Sirén</h2>
-            </div>
-          )}
-        </Link>
-        <div className="flex items-center gap-6">
-          <HeaderNav data={data} />
-          <CartWidget />
+    <header
+      className={cn(
+        'sticky top-0 z-10 w-full',
+        isHome ? 'bg-transparent' : 'bg-background border-b border-border',
+      )}
+      {...(theme ? { 'data-theme': theme } : {})}
+    >
+      <div className="container">
+        <div className="pt-4 md:pt-8 pb-8 flex justify-between items-center w-full">
+          <Link href="/">
+            {!isHome && (
+              <div className="">
+                <h2 className="text-3xl">Josefin Sirén</h2>
+              </div>
+            )}
+          </Link>
+          <div className="flex items-center gap-6">
+            <HeaderNav data={data} />
+            <CartWidget />
+          </div>
         </div>
       </div>
     </header>

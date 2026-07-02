@@ -20,6 +20,9 @@ type CartContextValue = {
   clearCart: () => void
   subtotal: number
   itemCount: number
+  isDrawerOpen: boolean
+  openDrawer: () => void
+  closeDrawer: () => void
 }
 
 const CartContext = createContext<CartContextValue | null>(null)
@@ -29,6 +32,7 @@ const STORAGE_KEY = 'js-cart'
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [items, setItems] = useState<CartItem[]>([])
   const [hydrated, setHydrated] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   useEffect(() => {
     const stored = window.localStorage.getItem(STORAGE_KEY)
@@ -57,6 +61,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       return [...prev, { ...item, quantity }]
     })
+    setIsDrawerOpen(true)
   }
 
   const removeItem = (priceId: string) => {
@@ -87,6 +92,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     clearCart,
     subtotal,
     itemCount,
+    isDrawerOpen,
+    openDrawer: () => setIsDrawerOpen(true),
+    closeDrawer: () => setIsDrawerOpen(false),
   }
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>

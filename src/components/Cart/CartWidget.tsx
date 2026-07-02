@@ -1,19 +1,17 @@
 'use client'
 
-import { useState } from 'react'
 import { ShoppingBag } from 'lucide-react'
 
 import { useCart } from '@/providers/Cart/CartContext'
 import { CartDrawer } from './CartDrawer'
 
 export function CartWidget() {
-  const [isOpen, setIsOpen] = useState(false)
-  const { itemCount } = useCart()
+  const { itemCount, isDrawerOpen, openDrawer, closeDrawer } = useCart()
 
   return (
     <>
       <button
-        onClick={() => setIsOpen(true)}
+        onClick={openDrawer}
         className="relative"
         aria-label={`Öppna varukorg${itemCount > 0 ? ` (${itemCount} varor)` : ''}`}
       >
@@ -24,7 +22,7 @@ export function CartWidget() {
           </span>
         )}
       </button>
-      <CartDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <CartDrawer isOpen={isDrawerOpen} onClose={closeDrawer} />
     </>
   )
 }
