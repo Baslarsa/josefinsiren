@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { usePathname } from 'next/navigation'
 
 import type { Header as HeaderType } from '@/payload-types'
 
@@ -8,14 +9,44 @@ import { CMSLink } from '@/components/Link'
 import { MenuIcon, X } from 'lucide-react'
 import { cn } from '@/utilities/ui'
 
+type NavLink = NonNullable<HeaderType['navItems']>[number]['link']
+
+function getLinkHref(link: NavLink) {
+  return link.type === 'reference' &&
+    typeof link.reference?.value === 'object' &&
+    link.reference.value.slug
+    ? `${link.reference?.relationTo !== 'pages' ? `/${link.reference?.relationTo}` : ''}/${
+        link.reference.value.slug
+      }`
+    : link.url
+}
+
+function normalizePath(path?: string | null) {
+  if (!path) return path
+  return path === '/home' ? '/' : path
+}
+
 export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
   const navItems = data?.navItems || []
+  const pathname = usePathname()
 
   return (
     <>
       <nav className="hidden md:flex gap-5 items-center justify-between">
         {navItems.map(({ link }, i) => {
-          return <CMSLink key={i} {...link} className="text-xl" appearance="link" />
+          const isActive = normalizePath(getLinkHref(link)) === normalizePath(pathname)
+
+          return (
+            <CMSLink
+              key={i}
+              {...link}
+              className={cn(
+                'text-xl pb-1 border-b-2',
+                isActive ? 'border-current' : 'border-transparent',
+              )}
+              appearance="link"
+            />
+          )
         })}
       </nav>
       <nav className="flex md:hidden">

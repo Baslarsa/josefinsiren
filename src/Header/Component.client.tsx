@@ -34,7 +34,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     <header
       className={cn(
         'sticky top-0 z-10 w-full',
-        isHome ? 'bg-transparent' : 'bg-background border-b border-border',
+        isHome ? 'bg-transparent' : 'dark:bg-background bg-white',
       )}
       {...(theme ? { 'data-theme': theme } : {})}
     >
