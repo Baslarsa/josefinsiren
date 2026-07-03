@@ -36,17 +36,20 @@ export const ProductsBlockComponent = ({ heading, maxProducts }: ProductsBlockCo
   if (!products.length) return null
 
   return (
-    <section className="my-12">
-      <div className="grid gap-8 grid-cols-1 max-w-6xl mx-auto px-4">
+    <section className="my-12 px-4">
+      {heading && (
+        <h2 className="text-2xl font-semibold text-center text-neutral-200 mb-8">{heading}</h2>
+      )}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
         {products.map((product) => (
-          <TailwindProduct key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
     </section>
   )
 }
 
-function TailwindProduct({ product }: { product: ShopProduct }) {
+function ProductCard({ product }: { product: ShopProduct }) {
   const { addItem, items } = useCart()
   const [added, setAdded] = useState(false)
 
@@ -68,55 +71,44 @@ function TailwindProduct({ product }: { product: ShopProduct }) {
   }
 
   return (
-    <div className="text-neutral-200">
-      <div className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
-        <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
-          {product.images[0] && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={product.images[0]}
-              alt={product.name}
-              className="h-full w-full object-cover"
-            />
-          )}
-          <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-            <h1 className="text-3xl font-bold tracking-tight">{product.name}</h1>
+    <div className="flex flex-col border border-white/10 rounded-lg overflow-hidden bg-neutral-900 text-neutral-200">
+      {product.images[0] && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={product.images[0]}
+          alt={product.name}
+          className="aspect-square w-full object-cover"
+        />
+      )}
 
-            {price && (
-              <div className="mt-3">
-                <h2 className="sr-only">Product information</h2>
-                <p className="text-3xl text-neutral-200 tracking-tight">
-                  {price} <span className="text-sm"> + frakt</span>
-                </p>
-              </div>
+      <div className="flex flex-1 flex-col p-4">
+        <h3 className="text-lg font-bold tracking-tight">{product.name}</h3>
+
+        {price && (
+          <p className="mt-1 text-xl tracking-tight">
+            {price} <span className="text-sm">+ frakt</span>
+          </p>
+        )}
+
+        {product.description && (
+          <p className="mt-3 text-sm text-neutral-200/80 line-clamp-3">{product.description}</p>
+        )}
+
+        <div className="mt-auto flex w-full pt-4">
+          <CustomButton
+            className="w-full gap-2"
+            onClick={handleAddToCart}
+            disabled={product.unitAmount === null}
+          >
+            {added || inCart ? (
+              <>
+                <Check className="h-5 w-5 text-green-500" aria-hidden="true" />
+                Tillagd i varukorgen
+              </>
+            ) : (
+              'Lägg i varukorg'
             )}
-
-            {product.description && (
-              <div className="mt-6">
-                <h3 className="sr-only">Description</h3>
-                <div className="space-y-6">
-                  <p>{product.description}</p>
-                </div>
-              </div>
-            )}
-
-            <div className="mt-10 flex w-full">
-              <CustomButton
-                className="w-full gap-2"
-                onClick={handleAddToCart}
-                disabled={product.unitAmount === null}
-              >
-                {added || inCart ? (
-                  <>
-                    <Check className="h-5 w-5 text-green-500" aria-hidden="true" />
-                    Tillagd i varukorgen
-                  </>
-                ) : (
-                  'Lägg i varukorg'
-                )}
-              </CustomButton>
-            </div>
-          </div>
+          </CustomButton>
         </div>
       </div>
     </div>

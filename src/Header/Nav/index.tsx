@@ -62,7 +62,7 @@ const MobileNav = ({ menuItems }: { menuItems: HeaderType['navItems'] }) => {
     <div>
       <div
         className={cn(
-          'transition-all duration-300 absolute top-0 left-0 right-0 h-0 z-20 bg-gray-950',
+          'transition-all duration-300 absolute top-0 left-0 right-0 h-0 z-20 bg-background',
           {
             'h-screen': isOpen,
           },

@@ -92,7 +92,7 @@ export const GigsList = async ({ heading = 'Upcoming gigs', maxGigs = 3 }: GigsL
           const isPassed = new Date(gig.date) < new Date()
           return (
             <React.Fragment key={gig.id}>
-              <span className={cn('font-medium', isPassed && 'line-through')}>
+              <span className={cn('font-medium opacity-60', isPassed && 'line-through')}>
                 {new Date(gig.date).toLocaleDateString('sv-SE', {
                   year: 'numeric',
                   month: 'short',
@@ -100,11 +100,11 @@ export const GigsList = async ({ heading = 'Upcoming gigs', maxGigs = 3 }: GigsL
                 })}
               </span>
 
-              <span className={cn('font-semibold truncate', isPassed && 'line-through')}>
+              <span className={cn('font-semibold truncate opacity-60', isPassed && 'line-through')}>
                 {gig.title}
               </span>
 
-              <span className={cn('truncate text-right', isPassed && 'line-through')}>
+              <span className={cn('truncate text-right opacity-60', isPassed && 'line-through')}>
                 {gig.city}
               </span>
             </React.Fragment>

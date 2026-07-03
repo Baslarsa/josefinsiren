@@ -36,7 +36,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       {...(theme ? { 'data-theme': theme } : {})}
     >
       <div className="container">
-        <div className="pt-4 md:pt-8 pb-8 flex justify-between items-center w-full text-neutral-200">
+        <div className="pt-4 md:pt-4 pb-4 flex justify-between items-center w-full text-neutral-200">
           <Link href="/">
             {!isHome && (
               <div className="">
@@ -45,8 +45,13 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
             )}
           </Link>
           <div className="flex items-center gap-6">
+            <span className="inline md:hidden">
+              <CartWidget />
+            </span>
             <HeaderNav data={data} />
-            <CartWidget />
+            <span className="hidden md:inline">
+              <CartWidget />
+            </span>
           </div>
         </div>
       </div>

@@ -119,9 +119,13 @@ export const FormBlock: React.FC<
   const formStartedAt = React.useRef<number>(Date.now())
 
   return (
-    <div className="container lg:max-w-[48rem] py-8 rounded-xl overflow-hidden bg-black/65 mb-16">
+    <div className="container lg:max-w-[40rem] py-6 rounded-xl overflow-hidden bg-black/65 mb-8">
       {enableIntro && introContent && !hasSubmitted && (
-        <RichText className="mb-8 lg:mb-12 text-center" data={introContent} enableGutter={false} />
+        <RichText
+          className="mb-4 lg:mb-6 text-center [&_h1]:!text-3xl [&_h1]:!mb-2"
+          data={introContent}
+          enableGutter={false}
+        />
       )}
       <div className="p-4 lg:p-6">
         <FormProvider {...formMethods}>
@@ -160,7 +164,7 @@ export const FormBlock: React.FC<
                     const Field: React.FC<any> = fields?.[field.blockType as keyof typeof fields]
                     if (Field) {
                       return (
-                        <div className="mb-6 last:mb-0" key={index}>
+                        <div className="mb-4 last:mb-0" key={index}>
                           <Field
                             form={formFromProps}
                             {...field}
