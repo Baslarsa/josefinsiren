@@ -55,7 +55,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
     <>
       <div
         className={cn(
-          'fixed inset-0 bg-black/50 z-40 transition-opacity',
+          'fixed inset-0 bg-black/50 z-40 transition-opacity text-neutral-200',
           isOpen ? 'opacity-100' : 'pointer-events-none opacity-0',
         )}
         onClick={onClose}
@@ -64,14 +64,14 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
 
       <div
         className={cn(
-          'fixed top-0 right-0 h-full w-full max-w-sm dark:bg-background bg-white text-foreground z-50 shadow-xl transition-transform duration-300 flex flex-col',
+          'fixed top-0 right-0 h-full w-full max-w-sm bg-neutral-900 z-50 shadow-xl transition-transform duration-300 flex flex-col',
           isOpen ? 'translate-x-0' : 'translate-x-full',
         )}
         role="dialog"
         aria-modal="true"
         aria-label="Varukorg"
       >
-        <div className="flex items-center justify-between p-4 border-b border-border">
+        <div className="flex items-center justify-between p-4 border-b border-white/10">
           <h2 className="text-xl font-semibold">Varukorg</h2>
           <button onClick={onClose} aria-label="Stäng varukorg">
             <X size={24} />
@@ -79,7 +79,7 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {items.length === 0 && <p className="text-muted-foreground">Din varukorg är tom.</p>}
+          {items.length === 0 && <p className="text-neutral-200">Din varukorg är tom.</p>}
 
           {items.map((item) => (
             <div key={item.priceId} className="flex gap-3">
@@ -93,13 +93,13 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
               )}
               <div className="flex-1">
                 <p className="font-medium">{item.name}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-sm text-neutral-200">
                   {formatPrice(item.unitAmount, item.currency)}
                 </p>
                 <div className="flex items-center gap-2 mt-1">
                   <button
                     onClick={() => updateQuantity(item.priceId, item.quantity - 1)}
-                    className="px-2 border border-border rounded"
+                    className="px-2 hover:bg-white/10 rounded"
                     aria-label="Minska antal"
                   >
                     -
@@ -107,14 +107,14 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
                   <span>{item.quantity}</span>
                   <button
                     onClick={() => updateQuantity(item.priceId, item.quantity + 1)}
-                    className="px-2 border border-border rounded"
+                    className="px-2 hover:bg-white/10 rounded"
                     aria-label="Öka antal"
                   >
                     +
                   </button>
                   <button
                     onClick={() => removeItem(item.priceId)}
-                    className="text-sm text-white ml-auto"
+                    className="text-sm text-neutral-200 ml-auto"
                   >
                     Ta bort
                   </button>
@@ -125,8 +125,8 @@ export function CartDrawer({ isOpen, onClose }: CartDrawerProps) {
         </div>
 
         {items.length > 0 && (
-          <div className="p-4 border-t border-border space-y-3">
-            <div className="flex justify-between font-thin text-gray-400">
+          <div className="p-4 border-t border-white/10 space-y-3">
+            <div className="flex justify-between font-thin text-neutral-200">
               <span>Frakt</span>
               <span>6 €</span>
             </div>

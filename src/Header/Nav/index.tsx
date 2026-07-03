@@ -40,10 +40,7 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
             <CMSLink
               key={i}
               {...link}
-              className={cn(
-                'text-xl pb-1 border-b-2',
-                isActive ? 'border-current' : 'border-transparent',
-              )}
+              className={cn('text-xl pb-1 text-neutral-200', { underline: isActive })}
               appearance="link"
             />
           )

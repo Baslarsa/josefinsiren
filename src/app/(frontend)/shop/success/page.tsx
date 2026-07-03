@@ -19,7 +19,9 @@ export default async function ShopSuccessPage({ searchParams }: Args) {
   const { session_id: sessionId } = await searchParams
 
   const session = sessionId
-    ? await stripe.checkout.sessions.retrieve(sessionId, { expand: ['line_items'] }).catch(() => null)
+    ? await stripe.checkout.sessions
+        .retrieve(sessionId, { expand: ['line_items'] })
+        .catch(() => null)
     : null
 
   const isPaid = session?.payment_status === 'paid'
@@ -31,7 +33,7 @@ export default async function ShopSuccessPage({ searchParams }: Args) {
     <div className="pt-24 pb-24">
       <ClearCartOnMount enabled={isPaid} />
       <div className="container max-w-2xl">
-        <div className="prose dark:prose-invert max-w-none text-center mb-12">
+        <div className="max-w-none text-center mb-12">
           <h1>{isPaid ? 'Tack för ditt köp!' : 'Tack!'}</h1>
           <p>
             {isPaid

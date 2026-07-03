@@ -32,14 +32,11 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const isHome = pathname === '/home' || pathname === '/'
   return (
     <header
-      className={cn(
-        'sticky top-0 z-10 w-full',
-        isHome ? 'bg-transparent' : 'dark:bg-background bg-white',
-      )}
+      className={cn('sticky top-0 z-10 w-full', isHome ? 'bg-transparent' : 'bg-black/50')}
       {...(theme ? { 'data-theme': theme } : {})}
     >
       <div className="container">
-        <div className="pt-4 md:pt-8 pb-8 flex justify-between items-center w-full">
+        <div className="pt-4 md:pt-8 pb-8 flex justify-between items-center w-full text-neutral-200">
           <Link href="/">
             {!isHome && (
               <div className="">

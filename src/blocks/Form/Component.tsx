@@ -119,11 +119,11 @@ export const FormBlock: React.FC<
   const formStartedAt = React.useRef<number>(Date.now())
 
   return (
-    <div className="container lg:max-w-[48rem] py-8 rounded-xl overflow-hidden">
+    <div className="container lg:max-w-[48rem] py-8 rounded-xl overflow-hidden bg-black/65 mb-16">
       {enableIntro && introContent && !hasSubmitted && (
-        <RichText className="mb-8 lg:mb-12" data={introContent} enableGutter={false} />
+        <RichText className="mb-8 lg:mb-12 text-center" data={introContent} enableGutter={false} />
       )}
-      <div className="p-4 lg:p-6 border border-border rounded-[0.8rem]">
+      <div className="p-4 lg:p-6">
         <FormProvider {...formMethods}>
           {!isLoading && hasSubmitted && confirmationType === 'message' && (
             <RichText data={confirmationMessage} />

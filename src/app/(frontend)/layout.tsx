@@ -12,6 +12,7 @@ import './globals.css'
 import { getServerSideURL } from '@/utilities/getURL'
 import CustomLoadingOverlay from '@/components/LoadingOverlay'
 import Script from 'next/script'
+import { Footer } from '@/Footer/Component'
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID!
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -39,6 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Header />
             <CustomLoadingOverlay />
             {children}
+            <Footer />
           </Providers>
         </body>
       </html>

@@ -64,6 +64,11 @@ export const Pages: CollectionConfig<'pages'> = {
       required: true,
     },
     {
+      name: 'backgroundImage',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       type: 'tabs',
       tabs: [
         {

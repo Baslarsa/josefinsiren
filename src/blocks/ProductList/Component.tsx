@@ -68,7 +68,7 @@ function TailwindProduct({ product }: { product: ShopProduct }) {
   }
 
   return (
-    <div className="dark:text-white light:text-black">
+    <div className="text-neutral-200">
       <div className="mx-auto max-w-2xl px-4 lg:max-w-7xl lg:px-8">
         <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
           {product.images[0] && (
@@ -85,7 +85,7 @@ function TailwindProduct({ product }: { product: ShopProduct }) {
             {price && (
               <div className="mt-3">
                 <h2 className="sr-only">Product information</h2>
-                <p className="text-3xl dark:text-gray-300 text-gray-600 tracking-tight">
+                <p className="text-3xl text-neutral-200 tracking-tight">
                   {price} <span className="text-sm"> + frakt</span>
                 </p>
               </div>

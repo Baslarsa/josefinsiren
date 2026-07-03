@@ -47,7 +47,7 @@ export const GigsList: FC<GigsListProps> = ({ heading = 'Upcoming gigs', maxGigs
   if (!splicedGigs?.length) return null
 
   return (
-    <section className="mt-8 space-y-4 ">
+    <section className="mt-8 space-y-4 text-neutral-200">
       <h2 className="text-xl font-semibold text-center">{heading}</h2>
 
       <div className="grid grid-cols-3 gap-x-4 text-left max-w-lg mx-auto">

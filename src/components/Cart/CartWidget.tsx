@@ -17,7 +17,7 @@ export function CartWidget() {
       >
         <ShoppingBag size={28} />
         {itemCount > 0 && (
-          <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs">
+          <span className="text-black absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs">
             {itemCount}
           </span>
         )}
