@@ -1,14 +1,29 @@
 // components/gigs/GigsList.tsx
-'use client'
-
-import { useGetGigs } from '@/app/(frontend)/api'
 import { Gig } from '@/payload-types'
 import { cn } from '@/utilities/ui'
-import React, { type FC } from 'react'
+import { getServerSideURL } from '@/utilities/getURL'
+import React from 'react'
 
 type GigsListProps = {
   heading?: string
   maxGigs?: number
+}
+
+/**
+ * Fetches gigs over the Payload REST API (rather than the local API) so this
+ * module has no Node-only imports (payload config, nodemailer, etc.) and can
+ * safely sit in the module graph of `RichText`, which is also rendered from
+ * client components (e.g. the Form block's confirmation message).
+ */
+const getGigs = async (): Promise<Gig[]> => {
+  const res = await fetch(`${getServerSideURL()}/api/gigs?limit=100&depth=0`, {
+    next: { tags: ['gigs'], revalidate: 3600 },
+  })
+
+  if (!res.ok) return []
+
+  const data = await res.json()
+  return data.docs ?? []
 }
 
 const sortedGigs = (gigs: Gig[], sort: 'asc' | 'desc' = 'asc') => {
@@ -29,10 +44,10 @@ const stripArrayOfGigsOlderThanAYear = (gigs: Gig[]) => {
   })
 }
 
-export const GigsList: FC<GigsListProps> = ({ heading = 'Upcoming gigs', maxGigs = 3 }) => {
+export const GigsList = async ({ heading = 'Upcoming gigs', maxGigs = 3 }: GigsListProps) => {
   const maxList = maxGigs ? maxGigs : 999
-  const { gigs } = useGetGigs()
-  const gigList = stripArrayOfGigsOlderThanAYear(gigs?.docs || []) || gigs?.docs
+  const gigs = await getGigs()
+  const gigList = stripArrayOfGigsOlderThanAYear(gigs)
 
   const splicedGigs = gigList.slice(0, maxList)
   const alreadyPassed = sortedGigs(

@@ -56,21 +56,10 @@ export default async function Page({ params: paramsPromise }: Args) {
     return <PayloadRedirects url={url} />
   }
 
-  const { hero, layout, backgroundImage } = page
-  console.log('BackgroundImage', backgroundImage)
+  const { hero, layout } = page
   return (
     <article className="pt-16">
       <PageClient />
-      {backgroundImage && (
-        <div
-          className="absolute top-0 left-0 w-full h-full z-[-1] bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url(${typeof backgroundImage === 'object' ? backgroundImage.url : ''})`,
-          }}
-        >
-          <div className="absolute inset-0 bg-black/70" />
-        </div>
-      )}
 
       {/* Allows redirects for valid pages too */}
       <PayloadRedirects disableNotFound url={url} />

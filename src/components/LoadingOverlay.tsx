@@ -1,27 +1,45 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { useGetGigs } from '@/app/(frontend)/api'
 
-const CustomLoadingOverlay = () => {
-  const { isLoading } = useGetGigs()
+type CustomLoadingOverlayProps = {
+  backgroundImageUrl?: string
+}
 
+const CustomLoadingOverlay = ({ backgroundImageUrl }: CustomLoadingOverlayProps) => {
   const [visible, setVisible] = useState(true)
   const [fadeOut, setFadeOut] = useState(false)
 
   useEffect(() => {
-    if (!isLoading) {
+    let cancelled = false
+    let timeout: ReturnType<typeof setTimeout>
+
+    const finish = () => {
+      if (cancelled) return
       // Starta fade-out
       setFadeOut(true)
 
       // Unmount efter animation (300ms)
-      const timeout = setTimeout(() => {
-        setVisible(false)
+      timeout = setTimeout(() => {
+        if (!cancelled) setVisible(false)
       }, 300)
-
-      return () => clearTimeout(timeout)
     }
-  }, [isLoading])
+
+    if (!backgroundImageUrl) {
+      finish()
+    } else {
+      const image = new Image()
+      image.onload = finish
+      image.onerror = finish
+      image.src = backgroundImageUrl
+      if (image.complete) finish()
+    }
+
+    return () => {
+      cancelled = true
+      clearTimeout(timeout)
+    }
+  }, [backgroundImageUrl])
 
   if (!visible) return null
 
