@@ -16,7 +16,7 @@ export async function Background() {
       className="fixed inset-0 -z-10 bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${image.url})` }}
     >
-      <div className="absolute inset-0 bg-black/70" />
+      <div className="absolute inset-0 bg-black/20" />
     </div>
   )
 }
