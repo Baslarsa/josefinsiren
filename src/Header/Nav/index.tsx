@@ -62,7 +62,7 @@ const MobileNav = ({ menuItems }: { menuItems: HeaderType['navItems'] }) => {
     <div>
       <div
         className={cn(
-          'transition-all duration-300 absolute top-0 left-0 right-0 h-0 z-20 bg-background',
+          'transition-all text-neutral-200 duration-300 absolute top-0 left-0 right-0 h-0 z-20 bg-background',
           {
             'h-screen': isOpen,
           },
@@ -71,7 +71,7 @@ const MobileNav = ({ menuItems }: { menuItems: HeaderType['navItems'] }) => {
         <nav
           onClick={handleToggle}
           className={cn(
-            'flex flex-col gap-5 items-center justify-center h-full transition-all duration-400',
+            'flex flex-col gap-5 items-center justify-center h-full transition-all duration-400 text-neutral-200',
             {
               'opacity-0': !isOpen,
               'opacity-100': isOpen,
@@ -79,7 +79,9 @@ const MobileNav = ({ menuItems }: { menuItems: HeaderType['navItems'] }) => {
           )}
         >
           {menuItems?.map(({ link }, i) => {
-            return <CMSLink key={i} {...link} className="text-3xl" appearance="link" />
+            return (
+              <CMSLink key={i} {...link} className="text-3xl text-neutral-200" appearance="link" />
+            )
           })}
         </nav>
       </div>

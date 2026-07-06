@@ -31,7 +31,7 @@ export const RenderBlocks: React.FC<{
 
   if (hasBlocks) {
     return (
-      <Fragment>
+      <div className="md:p-8 p-2">
         {blocks.map((block, index) => {
           const { blockType } = block
 
@@ -49,7 +49,7 @@ export const RenderBlocks: React.FC<{
           }
           return null
         })}
-      </Fragment>
+      </div>
     )
   }
 

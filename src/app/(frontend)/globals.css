@@ -28,7 +28,7 @@
   }
 
   :root {
-    --background: 0 0% 100%;
+    --background: #1a1a1a;
     --foreground: 222.2 84% 4.9%;
 
     --card: 240 5% 96%;

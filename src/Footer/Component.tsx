@@ -10,10 +10,10 @@ import { Logo } from '@/components/Logo/Logo'
 
 export async function Footer() {
   const footerData: Footer = await getCachedGlobal('footer', 1)()
-
+  const year: number = new Date().getFullYear()
   return (
     <footer className=" p-2 absolute bottom-0 text-sm font-thin text-center w-full bg-black/50 text-neutral-200">
-      © 2023 Josefin Sirén, All rights reserved.
+      © {year} Josefin Sirén, All rights reserved.
     </footer>
   )
 }
